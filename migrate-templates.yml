@@ -35,6 +35,8 @@
         debug:
           msg: "{{ register_survey }}"
 
+    with_items: "{{ register_projects.json }}"          
+
 
       # - name: add project AAP 
       #   uri:
@@ -94,5 +96,5 @@
       #   with_items: "{{ item.json.results }}"
 
     
-    with_items: "{{ register_projects.json }}"
+
 
