@@ -77,7 +77,7 @@
 
 - name: match id project
   set_fact:
-    id_project: "register_projects.id"
+    id_project: "{{ register_projects.id }}"
   when: job_template.project.name in register_projects.name
 
 - name: validate surveys imports
