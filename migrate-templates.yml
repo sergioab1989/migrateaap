@@ -16,7 +16,7 @@
   - name: validate name template import
     debug:
       msg: "{{ item.name }}"
-    with_items: "{{ register_out.json.results }}"
+    with_items: "{{ register_templates.json.results }}"
 
   # - name: add project AAP 
   #   uri:
