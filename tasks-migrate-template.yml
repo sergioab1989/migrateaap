@@ -79,15 +79,15 @@
   debug:
     msg: "{{ job_template.summary_fields.project.name }}"
 
-- name: validate surveys imports
-  debug:
-    msg: "{{ register_projects }}"
+# - name: validate surveys imports
+#   debug:
+#     msg: "{{ register_projects }}"
 
-# - name: match id project
-#   set_fact:
-#     id_project: "{{ item.id }}"
-#   when: "job_template.summary_fields.project.name == item.name"
-#   with_items: "{{ register_projects }}"
+- name: match id project
+  set_fact:
+    id_project: "{{ item.id }}"
+  when: "job_template.summary_fields.project.name == item.name"
+  with_items: "{{ register_projects.results }}"
 
 # - name: validate surveys imports
 #   debug:
