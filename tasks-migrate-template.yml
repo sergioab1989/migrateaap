@@ -61,33 +61,25 @@
 #     validate_certs: no
 #   with_items: "{{ item.json.results }}"
 
-- name: get survey AAP
-  uri:
-    url: "http://192.168.18.248{{ item.related.survey_spec }}"
-    headers:
-      Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
-    status_code: [200]
-    method: GET
-    validate_certs: no
-  register: register_survey
+# - name: get survey AAP
+#   uri:
+#     url: "http://192.168.18.248{{ item.related.survey_spec }}"
+#     headers:
+#       Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+#     status_code: [200]
+#     method: GET
+#     validate_certs: no
+#   register: register_survey
+
+# - name: validate surveys imports
+#   debug:
+#     msg: "{{ register_survey.json }}"
+
+- name: match id project
+  set_fact:
+    id_project: "register_projects.id"
+  when: job_template.project.name in register_projects.name
 
 - name: validate surveys imports
   debug:
-    msg: "{{ register_survey.json }}"
-
-- name: get projects AAP 
-  uri:
-    url: http://192.168.18.248/api/v2/projects/
-    headers:
-      Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
-    status_code: [200]
-    method: GET
-    validate_certs: no
-  register: register_projects
-
-- name: validate name project import
-  debug:
-    msg: 
-      - "{{ item.name }}"
-      - "{{ item.id }}"
-  with_items: "{{ register_projects.json.results }}"   
+    var: id_project

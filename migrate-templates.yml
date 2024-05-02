@@ -18,67 +18,27 @@
       msg: "{{ item.name }}"
     with_items: "{{ register_templates.json.results }}"
 
+  - name: get projects AAP 
+    uri:
+      url: http://192.168.18.248/api/v2/projects/
+      headers:
+        Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200]
+      method: GET
+      validate_certs: no
+    register: register_projects
+
+  - name: validate name project import
+    set_fact:
+      project_json: "{{ register_projects.json.results }}"
+
   - name: tareas por template
     include_tasks: tasks-migrate-template.yml
     loop: "{{ register_templates.json.results }}"
+    loop_control:
+      loop_var: job_template
 
 
-      # - name: add project AAP 
-      #   uri:
-      #     url: https://192.168.18.248/api/v2/organizations/1/projects/
-      #     headers:
-      #           Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
-      #     status_code: [200, 201]
-      #     method: POST
-      #     body_format: json
-      #     body:
-      #       {
-      #         "allow_simultaneous": true,
-      #         "ask_credential_on_launch": true,
-      #         "ask_diff_mode_on_launch": true,
-      #         "ask_execution_environment_on_launch": true,
-      #         "ask_forks_on_launch": true,
-      #         "ask_instance_groups_on_launch": true,
-      #         "ask_inventory_on_launch": true,
-      #         "ask_job_slice_count_on_launch": true,
-      #         "ask_job_type_on_launch": true,
-      #         "ask_labels_on_launch": true,
-      #         "ask_limit_on_launch": true,
-      #         "ask_scm_branch_on_launch": true,
-      #         "ask_skip_tags_on_launch": true,
-      #         "ask_tags_on_launch": true,
-      #         "ask_timeout_on_launch": true,
-      #         "ask_variables_on_launch": true,
-      #         "ask_verbosity_on_launch": true,
-      #         "become_enabled": true,
-      #         "description": "string",
-      #         "diff_mode": true,
-      #         "execution_environment": 0,
-      #         "extra_vars": "string",
-      #         "force_handlers": true,
-      #         "forks": 0,
-      #         "host_config_key": "string",
-      #         "inventory": 0,
-      #         "job_slice_count": 0,
-      #         "job_tags": "string",
-      #         "job_type": "string",
-      #         "limit": "string",
-      #         "name": "string",
-      #         "playbook": "string",
-      #         "prevent_instance_group_fallback": true,
-      #         "project": "string",
-      #         "scm_branch": "string",
-      #         "skip_tags": "string",
-      #         "start_at_task": "string",
-      #         "survey_enabled": true,
-      #         "timeout": 0,
-      #         "use_fact_cache": true,
-      #         "verbosity": "string",
-      #         "webhook_credential": 0,
-      #         "webhook_service": "string"
-      #       }
-      #     validate_certs: no
-      #   with_items: "{{ item.json.results }}"
 
     
 
