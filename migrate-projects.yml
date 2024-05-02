@@ -1,0 +1,50 @@
+---
+- name: Migrate projects
+  hosts: localhost
+  tasks: 
+
+  - name: get projects AAP 
+    uri:
+      url: http://192.168.18.248/api/v2/projects/
+      headers:
+        Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200]
+      method: GET
+      validate_certs: no
+    register: register_projects
+
+  - name: validate name project import
+    debug:
+      msg: "{{ item.name }}"
+    with_items: "{{ register_out.json.results }}"
+
+  - name: add project AAP 
+    uri:
+      url: https://192.168.18.248/api/v2/organizations/1/projects/
+      headers:
+            Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200, 201]
+      method: POST
+      body_format: json
+      body:
+        {
+          "allow_override": "{{ item.allow_override }}",
+          "credential": "{{ item.credential }}",
+          "default_environment": "{{ item.default_environment }}",
+          "description": "{{ item.description }}",
+          "name": "{{ item.name }}",
+          "organization": "{{ item.organization }}",
+          "scm_branch": "{{ item.scm_branch }}",
+          "scm_clean": "{{ item.scm_clean }}",
+          "scm_delete_on_update": "{{ item.scm_delete_on_update }}",
+          "scm_refspec": "{{ item.scm_refspec }}",
+          "scm_track_submodules": "{{ item.scm_track_submodules }}",
+          "scm_type": "{{ item.scm_type }}",
+          "scm_update_cache_timeout": "{{ item.scm_update_cache_timeout }}",
+          "scm_update_on_launch": "{{ item.scm_update_on_launch }}",
+          "scm_url": "{{ item.scm_url }}",
+          "signature_validation_credential": "{{ item.signature_validation_credential }}",
+          "timeout": "{{ item.timeout }}"
+        }      
+      validate_certs: no
+    with_items: "{{ register_projects.json.results }}"
