@@ -77,7 +77,7 @@
 
 - name: validate surveys imports
   debug:
-    msg: "{{ job_template.summary_fields. }}"
+    msg: "{{ job_template.summary_fields }}"
 
 # - name: match id project
 #   set_fact:
