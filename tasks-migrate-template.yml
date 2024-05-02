@@ -75,12 +75,16 @@
 #   debug:
 #     msg: "{{ register_survey.json }}"
 
-- name: match id project
-  set_fact:
-    id_project: "{{ item.id }}"
-  when: "job_template.summary_fields.project.name == item.name"
-  with_items: "{{ register_projects }}"
-
 - name: validate surveys imports
   debug:
-    var: id_project
+    msg: "{{ job_template.summary_fields. }}"
+
+# - name: match id project
+#   set_fact:
+#     id_project: "{{ item.id }}"
+#   when: "job_template.summary_fields.project.name == item.name"
+#   with_items: "{{ register_projects }}"
+
+# - name: validate surveys imports
+#   debug:
+#     var: id_project
