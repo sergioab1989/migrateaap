@@ -1,0 +1,14 @@
+---
+- name: get template AAP
+  uri:
+    url: "http://192.168.18.248{{ item.related.survey_spec }}"
+    headers:
+      Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+    status_code: [200]
+    method: GET
+    validate_certs: no
+  register: register_survey
+
+- name: validate surveys imports
+  debug:
+    msg: "{{ register_survey }}"
