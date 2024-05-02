@@ -11,4 +11,4 @@
 
 - name: validate surveys imports
   debug:
-    msg: "{{ register_survey }}"
+    msg: "{{ register_survey.json }}"
