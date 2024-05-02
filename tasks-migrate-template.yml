@@ -87,7 +87,7 @@
   set_fact:
     id_project: "{{ item.id }}"
   when: "job_template.summary_fields.project.name == item.name"
-  with_items: "{{ register_projects.results }}"
+  with_items: "{{ register_projects.json.results }}"
 
 # - name: validate surveys imports
 #   debug:
