@@ -1,0 +1,146 @@
+---
+- name: Get data aap
+  hosts: localhost
+  tasks: 
+
+  - name: get projects AAP 
+    uri:
+      url: http://192.168.18.248/api/v2/projects?page_size=200
+      headers:
+        Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200]
+      method: GET
+      validate_certs: no
+    register: register_projects
+
+  - name: create list projects
+    set_fact:
+      list_projects: "{{ list_projects | default([]) + [item.name] }}"
+    with_items: "{{ register_projects.json.results }}"
+    no_log: true
+
+  - name: view name of projects
+    debug:
+      var: list_projects
+
+  - name: get /api/v2/credentials/ AAP 
+    uri:
+      url: http://192.168.18.248/api/v2/credentials?page_size=200
+      headers:
+        Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200]
+      method: GET
+      validate_certs: no
+    register: register_credentials
+
+  - name: create list credentials
+    set_fact:
+      list_credentials: "{{ list_credentials | default([]) + [item.name] }}"
+    with_items: "{{ register_credentials.json.results }}"
+    no_log: true
+
+  - name: view name of credentials
+    debug:
+      var: list_credentials
+
+
+  - name: get inventories AAP 
+    uri:
+      url: http://192.168.18.248/api/v2/inventories?page_size=200
+      headers:
+        Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200]
+      method: GET
+      validate_certs: no
+    register: register_inventories
+
+  - name: create list inventories
+    set_fact:
+      list_inventories: "{{ list_inventories | default([]) + [item.name] }}"
+    with_items: "{{ register_inventories.json.results }}"
+    no_log: true
+
+  - name: view name of inventories
+    debug:
+      var: list_inventories
+
+
+  - name: get hosts AAP 
+    uri:
+      url: http://192.168.18.248/api/v2/hosts?page_size=200
+      headers:
+        Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200]
+      method: GET
+      validate_certs: no
+    register: register_hosts
+
+  - name: create list hosts
+    set_fact:
+      list_hosts: "{{ list_hosts | default([]) + [item.name] }}"
+    with_items: "{{ register_hosts.json.results }}"
+    no_log: true
+
+  - name: view name of hosts
+    debug:
+      var: list_hosts
+
+
+
+  - name: get job_templates AAP 
+    uri:
+      url: http://192.168.18.248/api/v2/job_templates?page_size=200
+      headers:
+        Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200]
+      method: GET
+      validate_certs: no
+    register: register_job_templates
+
+  - name: create list job_templates
+    set_fact:
+      list_job_templates: "{{ list_job_templates | default([]) + [item.name] }}"
+    with_items: "{{ register_job_templates.json.results }}"
+    no_log: true
+
+  - name: view name of job_templates
+    debug:
+      var: list_job_templates
+
+
+  - name: get workflow_job_templates AAP 
+    uri:
+      url: http://192.168.18.248/api/v2/workflow_job_templates?page_size=200
+      headers:
+        Authorization: 'Basic YWRtaW46cGFzc3dvcmQ='
+      status_code: [200]
+      method: GET
+      validate_certs: no
+    register: register_workflow_job_templates
+
+  - name: create list workflow_job_templates
+    set_fact:
+      list_workflow_job_templates: "{{ list_workflow_job_templates | default([]) + [item.name] }}"
+    with_items: "{{ register_workflow_job_templates.json.results }}"
+    no_log: true
+
+  - name: view name of workflow_job_templates
+    debug:
+      var: list_workflow_job_templates
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
