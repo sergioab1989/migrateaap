@@ -17,7 +17,7 @@
 
   - name: create list projects
     set_fact:
-      list_projects: "{{ list_projects.json.results | map(attribute='name') | list }}"
+      list_projects: "{{ register_projects.json.results | map(attribute='name') | list }}"
     no_log: true
 
   - name: view name of projects
