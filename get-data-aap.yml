@@ -37,23 +37,23 @@
 
   - name: create list credentials
     set_fact:
-      list_credentials: "{{ list_credentials | default([]) + [item.name] }}"
-    with_items: "{{ register_credentials.json.results }}"
+      list_credentials: "{{ register_credentials.json.results | map(attribute='name') | list }}"
+    # with_items: "{{ register_credentials.json.results }}"
     no_log: true
 
   - name: view name of credentials
     debug:
       var: list_credentials
 
-  - name: Render CSV template with data
-    template:
-      src: multiple_sheets.csv
-      dest: /root/file.csv
-    vars:
-      sheet1_title: "proyectos"
-      sheet1_data: "{{ list_projects }}"
-      sheet2_title: "credenciales"
-      sheet2_data: "{{ list_credentials }}"      
+  # - name: Render CSV template with data
+  #   template:
+  #     src: multiple_sheets.csv
+  #     dest: /root/file.csv
+  #   vars:
+  #     sheet1_title: "proyectos"
+  #     sheet1_data: "{{ list_projects }}"
+  #     sheet2_title: "credenciales"
+  #     sheet2_data: "{{ list_credentials }}"
 
   # - name: get inventories AAP 
   #   uri:
