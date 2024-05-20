@@ -13,6 +13,7 @@
           - 'cred-root'
         inventory: 'all'
         projects: 'all'
+        notification_templates: 'all'
         job_templates: 'all'
       register: register_assets_old_aap
 
