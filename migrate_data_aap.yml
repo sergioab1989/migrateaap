@@ -4,7 +4,7 @@
 
   tasks:
 
-    - name: Export credentials - inventories - projects and job_templates from old AAP
+    - name: Export credentials - inventories - projects, notification and job_templates from old AAP
       ansible.controller.export:
         controller_config_file: files/old_aap_cli.cfg
         credentials:
