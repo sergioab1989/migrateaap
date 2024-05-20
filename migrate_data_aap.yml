@@ -1,0 +1,33 @@
+- name: Playbook to export data AAP
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+
+    - name: Export credentials - inventories - projects and job_templates from old AAP
+      ansible.controller.export:
+        controller_config_file: files/old_aap_cli.cfg
+        credentials:
+          - 'cred-git-sabarca'
+          - 'cred-git-sabarca-redhat'
+          - 'cred-root'
+        inventory: 'all'
+        projects: 'all'
+        job_templates: 'all'
+      register: register_assets_old_aap
+
+    - name: Import data to new AAP
+      ansible.controller.import:
+        controller_config_file: files/new_aap_cli.cfg
+        assets: "{{ register_assets_old_aap.assets }}"
+
+    - name: Export wf job templates from old AAP
+      ansible.controller.export:
+        controller_config_file: files/old_aap_cli.cfg
+        workflow_job_templates: 'all'
+      register: register_wf_job_templates_old_aap
+
+    - name: Import wf job templates to new AAP
+      ansible.controller.import:
+        controller_config_file: files/new_aap_cli.cfg
+        assets: "{{ register_wf_job_templates_old_aap.assets }}"
